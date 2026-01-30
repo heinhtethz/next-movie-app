@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
-    {"offset": {"line": 43, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/95988/Documents/Fairway/movie/app/person/%5Bid%5D/route.tsx"],"sourcesContent":["export async function GET(\r\n  request: Request,\r\n  context: { params: { id: string } }\r\n) {\r\n  const { id } = context.params;\r\n  const res = await fetch(`https://api.themoviedb.org/3/person/${id}`, {\r\n    headers: {\r\n      Authorization: `Bearer ${process.env.TMDB_KEY}`,\r\n    },\r\n  });\r\n\r\n  const data = await res.json();\r\n  return Response.json(data);\r\n}\r\n"],"names":[],"mappings":";;;;AAAO,eAAe,IACpB,OAAgB,EAChB,OAAmC;IAEnC,MAAM,EAAE,EAAE,EAAE,GAAG,QAAQ,MAAM;IAC7B,MAAM,MAAM,MAAM,MAAM,CAAC,oCAAoC,EAAE,IAAI,EAAE;QACnE,SAAS;YACP,eAAe,CAAC,OAAO,EAAE,QAAQ,GAAG,CAAC,QAAQ,EAAE;QACjD;IACF;IAEA,MAAM,OAAO,MAAM,IAAI,IAAI;IAC3B,OAAO,SAAS,IAAI,CAAC;AACvB","debugId":null}}]
-}
