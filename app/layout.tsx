@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Button } from "@/components/ui/button";
-import { Clapperboard } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { redirect } from "next/navigation";
-import { fetchGenres } from "@/lib/fetchData";
-import GenreBar from "@/components/genreBar";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header"; // <- new client header
+import { fetchGenres } from "@/lib/fetchData";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,31 +27,12 @@ export default async function RootLayout({
 }>) {
   const genres = await fetchGenres();
 
-  async function search(data: FormData) {
-    "use server";
-    const q = data.get("q");
-    redirect(`/search?q=${q}`);
-  }
-
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <header>
-          <div className="flex border-b p-4 sticky top-0 bg-accent z-10">
-            <h1 className="text-2xl font-bold flex-1 flex items-center gap-1">
-              <Clapperboard />
-              Next Movie
-            </h1>
-
-            <form action={search} className="flex gap-1">
-              <Input placeholder="Search" name="q" />
-              <Button type="submit">Search</Button>
-            </form>
-          </div>
-          <GenreBar genres={genres} />
-        </header>
+        <Header genres={genres} />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
