@@ -47,8 +47,6 @@ const ICONS = {
   ),
 };
 
-// --- Helper Components ---
-
 // 1. Reusable Store Button
 function StoreButton({
   icon,
@@ -149,7 +147,7 @@ export default function Footer() {
             <p className="text-sm text-muted-foreground">
               Download our mobile app for on-the-go browsing.
             </p>
-            <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-2">
+            <div className="flex flex-row md:flex-col xl:flex-row gap-2">
               <StoreButton
                 href="#"
                 icon={ICONS.apple}

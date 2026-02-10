@@ -1,4 +1,4 @@
-export default function CircleProgress({ value }) {
+export default function CircleProgress({ value }: { value: number }) {
   return (
     <div className="relative w-16 h-16 flex items-center justify-center cursor-pointer hover:scale-110">
       {/* Outer Ring */}

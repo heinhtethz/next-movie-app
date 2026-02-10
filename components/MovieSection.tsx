@@ -9,7 +9,7 @@ export default function MovieSection({
   items: MovieType[];
 }) {
   return (
-    <section className="mb-10">
+    <section className="mb-10 mx-2">
       <h2 className="text-3xl font-bold mb-8">{title}</h2>
 
       {items.length === 0 ? (

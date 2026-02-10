@@ -6,7 +6,7 @@ type MovieProps = {
   currentGenreId?: string;
 };
 
-export default function Movie({ movie, currentGenreId }: MovieProps) {
+export default function MovieCard({ movie, currentGenreId }: MovieProps) {
   const posterBaseUrl = "https://image.tmdb.org/t/p/w185";
 
   const posterSrc = movie.poster_path
@@ -26,6 +26,7 @@ export default function Movie({ movie, currentGenreId }: MovieProps) {
           className="
             w-full
             aspect-[2/3]
+            bg-gray-500
             rounded-lg
             object-cover
             transition-transform duration-200
