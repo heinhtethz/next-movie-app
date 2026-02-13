@@ -16,7 +16,7 @@ export default function MovieSection({
         <p className="text-sm text-slate-600">No results found.</p>
       ) : (
         <div
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-1 md:gap-6"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 xl:grid-cols-6 gap-1 md:gap-6"
           role="list"
         >
           {items.map((movie) => (

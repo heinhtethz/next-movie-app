@@ -40,10 +40,12 @@ export default async function Person({ params }: PageProps) {
       {/* Left Section */}
 
       <div className="max-w-2xl flex flex-col gap-4">
-        <img
+        <Image
           src={profileSrc}
           alt={castDetails.name}
-          className="rounded-xl object-cover w-[300px] h-[450px]"
+          width={300}
+          height={450}
+          className="rounded-xl object-cover aspect-[2/3]"
         />
         {/* Personal Info */}
         <div>

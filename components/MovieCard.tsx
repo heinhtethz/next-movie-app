@@ -1,4 +1,5 @@
 import type { MovieType } from "@/types/global";
+import Image from "next/image";
 import Link from "next/link";
 
 type MovieProps = {
@@ -20,9 +21,11 @@ export default function MovieCard({ movie, currentGenreId }: MovieProps) {
   return (
     <div className="flex flex-col items-center w-full">
       <Link href={href} className="group w-full">
-        <img
+        <Image
           src={posterSrc}
-          alt={movie.title}
+          alt={posterSrc}
+          width={500}
+          height={750}
           className="
             w-full
             aspect-[2/3]
