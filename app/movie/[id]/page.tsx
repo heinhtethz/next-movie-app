@@ -44,7 +44,7 @@ export default async function Movie({ params }: PageProps) {
               alt={`${movie.title} backdrop`}
               fill
               priority
-              sizes="100vw"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover"
             />
           ) : (
@@ -171,11 +171,12 @@ export default async function Movie({ params }: PageProps) {
       {/* MOBILE */}
       <div className="md:hidden relative">
         {/* Backdrop (short) */}
-        <div className="relative w-full h-[220px]">
+        <div className="relative w-full h-[220px] sm:h-[350px]">
           <Image
             src={`${TMDB_IMAGE.backdrop}${movie.backdrop_path}`}
             alt={movie.title}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
             priority
           />
@@ -189,9 +190,9 @@ export default async function Movie({ params }: PageProps) {
             <Image
               src={`${TMDB_IMAGE.poster}${movie.poster_path}`}
               alt={movie.title}
-              width={90}
-              height={135}
-              className="rounded-md object-cover"
+              width={100}
+              height={150}
+              className="rounded-md object-cover sm:w-[180px] aspect-[2/3]"
             />
           </div>
           {/* Title + Score */}
@@ -251,26 +252,32 @@ export default async function Movie({ params }: PageProps) {
       </div>
 
       {/* CAST */}
-      <section className="w-full max-w-[1440px] mx-auto px-6 py-12">
+      <section className="max-w-[1440px] mx-auto py-12">
         <h2 className="text-2xl font-bold mb-6">Top Billed Cast</h2>
 
-        <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
+        <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {cast.map((person) => (
             <div
               key={person.id}
               className="flex flex-col items-center text-center"
             >
-              <Link href={`/person/${person.id}`} className="group w-[185px]">
+              <Link href={`/person/${person.id}`} className="w-full">
                 {person.profile_path ? (
                   <Image
                     src={`${TMDB_IMAGE.profile}${person.profile_path}`}
-                    alt={person.name}
-                    width={185}
-                    height={278}
-                    className="rounded-xl object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+                    alt={movie.title}
+                    width={300}
+                    height={450}
+                    className="
+                    w-full
+                    aspect-[2/3]
+                    rounded-lg
+                    object-cover
+                    transition-transform duration-200
+                    hover:scale-105"
                   />
                 ) : (
-                  <div className="w-[185px] h-[278px] bg-gray-300 rounded-xl" />
+                  <div className="aspect-[2/3] bg-gray-300 rounded-xl" />
                 )}
 
                 <p className="mt-3 font-semibold leading-tight group-hover:underline">
