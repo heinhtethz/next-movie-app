@@ -1,5 +1,6 @@
 import Biography from "@/components/biography";
 import CastKnownForCarousel from "@/components/castKnownForCarousel";
+import { Info } from "@/components/Info";
 import birthdayCalculate, { formatDate } from "@/lib/birthdayCalculate";
 import { fetchCastDetails, fetchPopularMoviesByCast } from "@/lib/fetchData";
 import Image from "next/image";
@@ -8,22 +9,16 @@ type PageProps = {
   params: Promise<{ id: number }>;
 };
 
-type InfoProps = {
-  label: string;
-  value?: string | string[];
-};
-
 export default async function Person({ params }: PageProps) {
   const { id } = await params;
   const castDetails = await fetchCastDetails(id);
   const knownFor = await fetchPopularMoviesByCast(id);
-  const knownForData = knownFor.map((item) => {
-    return {
-      id: item.id,
-      title: item.title,
-      poster_path: item.poster_path,
-    };
-  });
+
+  const knownForData = knownFor.map((item) => ({
+    id: item.id,
+    title: item.title,
+    poster_path: item.poster_path,
+  }));
 
   const profileBaseUrl = "https://image.tmdb.org/t/p/w300";
   const profileSrc = castDetails.profile_path
@@ -36,18 +31,21 @@ export default async function Person({ params }: PageProps) {
   };
 
   return (
-    <div className="flex justify-center gap-5">
+    <div className="grid grid-cols-1 lg:grid-cols-4 lg:gap-8 max-w-7xl m-auto p-5">
       {/* Left Section */}
-
-      <div className="max-w-2xl flex flex-col gap-4">
+      <div className="col-span-1 flex flex-col gap-4">
         <Image
           src={profileSrc}
           alt={castDetails.name}
-          width={300}
-          height={450}
-          className="rounded-xl object-cover aspect-[2/3]"
+          width={200}
+          height={700}
+          className="w-fit lg:w-full m-auto lg:m-0 rounded-xl object-cover aspect-square lg:aspect-auto"
         />
-        {/* Personal Info */}
+
+        <h1 className="font-bold text-4xl text-center mb-5 lg:hidden">
+          {castDetails.name}
+        </h1>
+
         <div>
           <h3 className="font-bold text-xl mb-4">Personal Info</h3>
 
@@ -69,38 +67,15 @@ export default async function Person({ params }: PageProps) {
         </div>
       </div>
 
-      <div className="max-w-4xl">
-        <h1 className="font-bold text-3xl mb-5">{castDetails.name}</h1>
+      {/* Right Section */}
+      <div className="col-span-3">
+        <h1 className="font-bold text-4xl mb-5 hidden lg:block">
+          {castDetails.name}
+        </h1>
+
         <Biography biography={castDetails.biography} />
         <CastKnownForCarousel items={knownForData} />
       </div>
-    </div>
-  );
-}
-
-function Info({ label, value }: InfoProps) {
-  if (!value || (Array.isArray(value) && value.length === 0)) {
-    return (
-      <div className="mb-3">
-        <h5 className="font-semibold text-md">{label}</h5>
-        <p>-</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="mb-3">
-      <h5 className="font-semibold text-md">{label}</h5>
-
-      {Array.isArray(value) ? (
-        <ul className="list-none list-inside">
-          {value.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>{value}</p>
-      )}
     </div>
   );
 }

@@ -4,6 +4,8 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { fetchGenres } from "@/lib/fetchData";
+import "@radix-ui/themes/styles.css";
+import { Theme } from "@radix-ui/themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +35,9 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header genres={genres} />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          <Theme>{children}</Theme>
+        </main>
         <Footer />
       </body>
     </html>
