@@ -18,7 +18,7 @@ export default function GenreBar({ genres }: { genres: GenreType[] }) {
   // 2. Function to handle scrolling
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
-      const scrollAmount = 300; // Adjust scroll distance
+      const scrollAmount = 300;
       scrollRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
@@ -29,7 +29,7 @@ export default function GenreBar({ genres }: { genres: GenreType[] }) {
   if (pathname === "/" || pathname.startsWith("/genre/")) {
     return (
       // Container changed from w-[200px] to w-full and added relative positioning
-      <div className="w-full relative group border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="w-full absolute group border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         {/* Left Scroll Button (Visible on hover) */}
         <div className="absolute left-0 top-0 bottom-0 z-20 flex items-center bg-gradient-to-r from-background to-transparent pl-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <Button

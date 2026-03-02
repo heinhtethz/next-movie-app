@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,18 +14,46 @@ type Props = {
 
 export default function Header({ genres }: Props) {
   const [searchOpen, setSearchOpen] = useState(false);
+  const [showHeader, setShowHeader] = useState(true);
   const router = useRouter();
+
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    function handleScroll() {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+        // scrolling down
+        setShowHeader(false);
+      } else {
+        // scrolling up
+        setShowHeader(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget as HTMLFormElement);
+    const fd = new FormData(e.currentTarget);
     const q = String(fd.get("q") ?? "");
     router.push(`/search?q=${encodeURIComponent(q)}`);
     setSearchOpen(false);
   }
 
   return (
-    <header className="sticky top-0 z-10 bg-accent border-b">
+    <header
+      className={`
+        sticky top-0 z-50 bg-accent border-b mb-16
+        transition-transform duration-300
+        ${showHeader ? "translate-y-0" : "-translate-y-full"}
+      `}
+    >
       <div className="flex items-center justify-between p-4">
         <h1
           className={`text-lg md:text-2xl font-bold flex items-center gap-1
