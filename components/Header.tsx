@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Clapperboard, Search, X } from "lucide-react";
@@ -16,6 +16,7 @@ export default function Header({ genres }: Props) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
   const router = useRouter();
+  const pathname = usePathname();
 
   const lastScrollY = useRef(0);
 
@@ -49,8 +50,8 @@ export default function Header({ genres }: Props) {
   return (
     <header
       className={`
-        sticky top-0 z-50 bg-accent border-b mb-16
-        transition-transform duration-300
+        sticky top-0 z-50 bg-accent border-b
+        transition-transform duration-300 ${(pathname === "/" || pathname.startsWith("/genre/")) && "mb-16"}
         ${showHeader ? "translate-y-0" : "-translate-y-full"}
       `}
     >
@@ -98,8 +99,9 @@ export default function Header({ genres }: Props) {
           )}
         </div>
       </div>
-
-      <GenreBar genres={genres} />
+      {(pathname === "/" || pathname.startsWith("/genre/")) && (
+        <GenreBar genres={genres} />
+      )}
     </header>
   );
 }
