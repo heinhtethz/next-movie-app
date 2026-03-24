@@ -4,9 +4,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Clapperboard, Search, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 import GenreBar from "@/components/genreBar";
 import { GenreType } from "@/types/global";
+import Drawer from "./Drawer";
+import NextMovieLogo from "./ui/logo";
 
 type Props = {
   genres: GenreType[];
@@ -15,6 +17,7 @@ type Props = {
 export default function Header({ genres }: Props) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -55,15 +58,11 @@ export default function Header({ genres }: Props) {
         ${showHeader ? "translate-y-0" : "-translate-y-full"}
       `}
     >
+      <Drawer open={openDrawer} setOpen={setOpenDrawer} />
       <div className="flex items-center justify-between p-4">
-        <h1
-          className={`text-lg md:text-2xl font-bold flex items-center gap-1
-          ${searchOpen ? "hidden sm:flex" : ""}
-          `}
-        >
-          <Clapperboard />
-          <span>Next Movie</span>
-        </h1>
+        <div className={`${searchOpen ? "hidden sm:flex" : ""}`}>
+          <NextMovieLogo />
+        </div>
 
         <form
           onSubmit={onSubmit}
@@ -75,13 +74,22 @@ export default function Header({ genres }: Props) {
 
         <div className="flex items-center sm:hidden">
           {!searchOpen ? (
-            <button
-              aria-label="Open search"
-              className="p-2"
-              onClick={() => setSearchOpen(true)}
-            >
-              <Search />
-            </button>
+            <div>
+              <button
+                aria-label="Open search"
+                className="p-2"
+                onClick={() => setSearchOpen(true)}
+              >
+                <Search />
+              </button>
+              <button
+                aria-label="Open Drawer"
+                className="p-2"
+                onClick={() => setOpenDrawer(!openDrawer)}
+              >
+                {openDrawer ? <X /> : <Menu />}
+              </button>
+            </div>
           ) : (
             <div className="flex gap-5">
               <form onSubmit={onSubmit} className="flex gap-2">

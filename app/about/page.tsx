@@ -29,7 +29,7 @@ export default function About() {
           <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center font-semibold">
             The Next Movie advantage
           </h3>
-          <ul className="list-decimal flex flex-col gap-5">
+          <ul className="list-disc flex flex-col gap-5">
             <li>
               <p>
                 Every year since 2008, the number of contributions to our

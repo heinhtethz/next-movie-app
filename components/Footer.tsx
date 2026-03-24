@@ -17,7 +17,7 @@ type LinkType = {
 const COMPANY_LINKS = [
   { label: "About Us", href: "/about" },
   { label: "Contact Us", href: "/contact" },
-  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Privacy & Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
 ];
 
@@ -113,6 +113,9 @@ function LinkList({
 
 // --- Main Component ---
 export default function Footer() {
+  const today = new Date();
+  const copyRightYear = today.getFullYear();
+
   return (
     <footer className="bg-accent/30 border-t py-12 mt-auto">
       <div className="container mx-auto px-4">
@@ -166,7 +169,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-          <p>© 2026 Next Movie. All rights reserved.</p>
+          <p>© {copyRightYear} Next Movie. All rights reserved.</p>
           <div className="flex gap-4 mt-4 md:mt-0">
             {LEGAL_LINKS.map((link) => (
               <Link
