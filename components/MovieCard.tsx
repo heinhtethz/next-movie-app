@@ -22,6 +22,7 @@ export default function MovieCard({ movie, currentGenreId }: MovieProps) {
     <div className="flex flex-col items-center w-full">
       <Link href={href} className="group w-full">
         <Image
+          priority={true}
           src={posterSrc}
           alt={posterSrc}
           width={500}
