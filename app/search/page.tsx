@@ -1,5 +1,4 @@
 import MovieCard from "@/components/MovieCard";
-import Movie from "@/components/MovieCard";
 import type { MovieType } from "@/types/global";
 
 async function fetchSearch(q: string): Promise<MovieType[]> {

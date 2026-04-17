@@ -17,13 +17,6 @@ type Props = {
 export default function CastKnownForCarousel({ items }: Props) {
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const scroll = (offset: number) => {
-    sliderRef.current?.scrollBy({
-      left: offset,
-      behavior: "smooth",
-    });
-  };
-
   return (
     <section className="relative w-full">
       <h2 className="text-xl font-bold mb-4 mt-6">Known For</h2>
