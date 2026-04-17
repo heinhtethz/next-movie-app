@@ -1,84 +1,69 @@
 "use client";
 
-import { useRef } from "react"; // Added useRef
+import { useRef } from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { Play, ChevronLeft, ChevronRight } from "lucide-react"; // Added Arrow Icons
+import { Play, ChevronLeft, ChevronRight } from "lucide-react";
 import { GenreType } from "@/types/global";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function GenreBar({ genres }: { genres: GenreType[] }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const activeGenreId = searchParams.get("genreId");
-
-  // 1. Create a reference to the scroll container
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // 2. Function to handle scrolling
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
-      const scrollAmount = 300;
       scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
+        left: direction === "left" ? -300 : 300,
         behavior: "smooth",
       });
     }
   };
+
   return (
-    // Container changed from w-[200px] to w-full and added relative positioning
     <div className="w-full absolute group border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      {/* Left Scroll Button (Visible on hover) */}
+      {/* Left Button */}
       <div className="absolute left-0 top-0 bottom-0 z-20 flex items-center bg-gradient-to-r from-background to-transparent pl-2 opacity-0 group-hover:opacity-100 transition-opacity">
         <Button
           variant="outline"
           size="icon"
-          className="h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm"
+          className="h-8 w-8 rounded-full bg-background/80"
           onClick={() => scroll("left")}
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
       </div>
 
-      {/* Scrollable Area */}
-      {/* Changed flex-col to flex-row, added overflow-x-auto, removed wrapping */}
+      {/* Scroll Area */}
       <div
         ref={scrollRef}
-        className="flex flex-row items-center gap-2 overflow-x-auto p-4 no-scrollbar scroll-smooth"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }} // Hides scrollbar in Firefox/IE
+        className="flex gap-2 overflow-x-auto p-4 no-scrollbar"
       >
-        {/* 'All' Button */}
+        {/* All */}
         <Button
           asChild
-          variant={
-            activeGenreId === "undefined" || pathname === "/"
-              ? "default"
-              : "outline"
-          }
-          // Added flex-none to prevent shrinking
+          variant={pathname === "/" ? "default" : "outline"}
           className="flex-none rounded-full hover:bg-black hover:text-white"
         >
-          <Link href={"/"}>
+          <Link href="/">
             <Play className="mr-2 h-4 w-4" />
             All
           </Link>
         </Button>
 
-        {/* Genre Buttons */}
-        {genres?.map((genre) => {
+        {/* Genres */}
+        {genres.map((genre) => {
           const genreUrl = `/genre/${genre.name}/${genre.id}`;
-          const isActive =
-            pathname === genreUrl || activeGenreId === genre.id.toString();
+          const isActive = pathname === genreUrl;
 
           return (
             <Button
               asChild
               key={genre.id}
               variant={isActive ? "default" : "outline"}
-              // Added flex-none to prevent shrinking
               className="flex-none rounded-full hover:bg-black hover:text-white"
             >
-              <Link href={`/genre/${genre.name}/${genre.id}`}>
+              <Link href={genreUrl}>
                 <Play className="mr-2 h-4 w-4" />
                 {genre.name}
               </Link>
@@ -87,19 +72,19 @@ export default function GenreBar({ genres }: { genres: GenreType[] }) {
         })}
       </div>
 
-      {/* Right Scroll Button (Visible on hover) */}
+      {/* Right Button */}
       <div className="absolute right-0 top-0 bottom-0 z-20 flex items-center bg-gradient-to-l from-background to-transparent pr-2 opacity-0 group-hover:opacity-100 transition-opacity">
         <Button
           variant="outline"
           size="icon"
-          className="h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm"
+          className="h-8 w-8 rounded-full bg-background/80"
           onClick={() => scroll("right")}
         >
           <ChevronRight className="h-4 w-4" />
         </Button>
       </div>
 
-      {/* Hide Scrollbar Style for Chrome/Safari */}
+      {/* Hide scrollbar */}
       <style jsx global>{`
         .no-scrollbar::-webkit-scrollbar {
           display: none;
