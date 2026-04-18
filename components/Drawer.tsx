@@ -24,7 +24,7 @@ export default function Drawer({
   return (
     <div
       className={`fixed inset-0 z-50 ${
-        open ? "pointer-events-auto" : "pointer-events-none"
+        open ? "pointer-events-auto" : "pointer-events-none overflow-hidden"
       }`}
     >
       {/* Overlay */}

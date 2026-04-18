@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef  } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -108,7 +108,7 @@ export default function Header({ genres }: Props) {
         </div>
       </div>
       {(pathname === "/" || pathname.startsWith("/genre/")) && (
-        <GenreBar genres={genres} />  
+        <GenreBar genres={genres} />
       )}
     </header>
   );
