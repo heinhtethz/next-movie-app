@@ -35,7 +35,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header genres={genres} />
-        <main className="flex-1">
+        <main className="flex-1 overflow-x-hidden">
           <Theme>{children}</Theme>
         </main>
         <Footer />

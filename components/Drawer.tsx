@@ -1,4 +1,7 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
+"use client";
+
+import { Dispatch, Fragment, SetStateAction } from "react";
+import { Transition, TransitionChild } from "@headlessui/react";
 
 export default function Drawer({
   open,
@@ -7,13 +10,6 @@ export default function Drawer({
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
-
   const links = [
     { name: "About Us", href: "/about" },
     { name: "Contact Us", href: "/contact" },
@@ -22,37 +18,56 @@ export default function Drawer({
   ];
 
   return (
-    <div
-      className={`fixed inset-0 z-50 ${
-        open ? "pointer-events-auto" : "pointer-events-none overflow-hidden"
-      }`}
-    >
-      {/* Overlay */}
-      <div
-        onClick={() => setOpen(false)}
-        className={`absolute inset-0 transition-opacity duration-300 z-40
-        ${open ? "opacity-100" : "opacity-0"}`}
-      />
+    <Transition show={open} as={Fragment}>
+      <div className="relative z-50">
+        {/* Backdrop */}
+        <TransitionChild
+          as={Fragment}
+          enter="transition-opacity duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 top-[70px] bg-black/30" />
+        </TransitionChild>
 
-      {/* Drawer */}
-      <div
-        className={`absolute top-[70px] right-0 h-screen w-full bg-gray-100 shadow-xl
-        transform transition-transform duration-500 z-50
-        ${open ? "translate-x-0" : "translate-x-full"}`}
-      >
-        <div className="flex flex-col gap-4 p-6 overflow-y-auto h-full border-t-2">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="text-lg font-medium"
+        {/* Container */}
+        <div className="fixed inset-0 top-[70px] flex justify-end">
+          {/* Sheet */}
+          <TransitionChild
+            as={Fragment}
+            enter="transition-transform duration-500 ease-out"
+            enterFrom="translate-x-full"
+            enterTo="translate-x-0"
+            leave="transition-transform duration-500 ease-in"
+            leaveFrom="translate-x-0"
+            leaveTo="translate-x-full"
+          >
+            <div
+              className="
+                h-dvh
+                w-full sm:w-[420px]
+                bg-gray-100 shadow-xl
+              "
             >
-              {link.name}
-            </a>
-          ))}
+              <div className="flex h-full flex-col gap-4 border-t-2 p-6">
+                {links.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="text-lg font-medium"
+                  >
+                    {link.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </TransitionChild>
         </div>
       </div>
-    </div>
+    </Transition>
   );
 }
