@@ -255,7 +255,7 @@ export default async function Movie({ params }: PageProps) {
       <section className="max-w-[1440px] mx-auto py-12">
         <h2 className="text-2xl font-bold mb-6">Top Billed Cast</h2>
 
-        <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        <div className="grid gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {cast.map((person) => (
             <div
               key={person.id}

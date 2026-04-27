@@ -46,6 +46,7 @@ export default function Header({ genres }: Props) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const q = String(fd.get("q") ?? "");
+    if (q === "") return;
     router.push(`/search?q=${encodeURIComponent(q)}`);
     setSearchOpen(false);
   }
